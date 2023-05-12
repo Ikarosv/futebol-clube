@@ -55,5 +55,17 @@ describe('Testando a rota /teams', () => {
       expect(r).to.have.property('body');
       expect(r.body).to.be.deep.eq(mockGetTeam);
     });
+    it('Testa se algo der errado na service ou model o controller envia erro 500', async () => {
+      sinon
+      .stub(TeamModel, "findAll")
+      .throws();
+
+      const r = await request(app).get('/teams');
+      
+      expect(r).to.have.status(500);
+
+      // expect(r).to.be.a('object');
+      // expect(r.body).to.be.deep.eq();
+    });
   });
 });
