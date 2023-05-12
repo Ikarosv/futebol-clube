@@ -78,4 +78,15 @@ describe('Testando a rota /teams', () => {
     expect(team).to.have.property('body');
     expect(team.body).to.be.deep.eq(mockGetTeamById);
   });
+
+  it('Testa se um GET na rota "/teams/:id" retorna erro 404 se o time não existir', async () => {
+    sinon
+    .stub(TeamModel, "findOne")
+    .resolves(null);
+
+    const team = await request(app).get('/teams/2');
+    
+    expect(team).to.have.status(404);
+    expect(team.body).to.be.deep.eq({ message: 'Time não encontrado' });
+  });
 });
