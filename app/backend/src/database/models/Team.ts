@@ -18,7 +18,11 @@ class Team extends Model<TeamInterface> implements TeamInterface {
 }
 
 Team.init({
-  id: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   teamName: DataTypes.STRING,
 }, {
   underscored: true,
