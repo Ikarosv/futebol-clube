@@ -89,4 +89,15 @@ describe('Testando a rota /teams', () => {
     expect(team).to.have.status(404);
     expect(team.body).to.be.deep.eq({ message: 'Time não encontrado' });
   });
+
+  it('Testa se em caso e erro desconhecido retorna com um status 500', async () => {
+    sinon
+    .stub(TeamModel, "findOne")
+    .throws();
+
+    const team = await request(app).get('/teams/2');
+    
+    expect(team).to.have.status(500);
+    expect(team.body).to.be.deep.eq({});
+  });
 });
