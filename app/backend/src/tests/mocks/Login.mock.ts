@@ -23,8 +23,15 @@ export const mockPostLoginWithoutPassword = {
     password: undefined
 }
 
+export const mockUser = {
+    ...mockṔostEncrypted,
+    id: 1,
+    username: 'ikaro',
+    role: 'admin',
+}
+
 export const mockṔostUserResponse = {
-    token: sign(mockṔostEncrypted, secret, {
+    token: sign(mockUser, secret, {
         expiresIn: 86400
     })
 }

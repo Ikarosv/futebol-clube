@@ -4,7 +4,7 @@ import User from '../database/models/User';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
-import { errorAllFieldsMustBeFilled, mockPostLoginWithoutEmail, mockPostLoginWithoutPassword, mockṔostLogin, mockṔostUserResponse } from './mocks/Login.mock';
+import { errorAllFieldsMustBeFilled, mockPostLoginWithoutEmail, mockPostLoginWithoutPassword, mockUser, mockṔostLogin, mockṔostUserResponse } from './mocks/Login.mock';
 
 const request = chai.request(app);
 chai.use(chaiHttp);
@@ -21,7 +21,7 @@ describe('Testa a rota /login', () => {
   before(async () => {
     sinon
       .stub(User, "findOne")
-      .resolves(mockṔostLogin as User);
+      .resolves(mockUser as User);
   });
 
   after(sinon.restore)
