@@ -1,3 +1,4 @@
+import NotFoundError from '../../errors/NotFoundError';
 import Team from '../models/Team';
 
 export const getAllTeams = async () => {
@@ -6,4 +7,10 @@ export const getAllTeams = async () => {
   return allTeams;
 };
 
-export const getTeam = (_id: number) => {};
+export const getTeamById = async (id: number) => {
+  const team = await Team.findOne({ where: { id } });
+
+  if (!team) throw new NotFoundError('Time não encontrado');
+
+  return team;
+};
