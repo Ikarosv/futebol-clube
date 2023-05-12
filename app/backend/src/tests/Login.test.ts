@@ -26,14 +26,6 @@ describe('Testa a rota /login', () => {
 
   after(sinon.restore)
 
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
   it('Testa se é possivel fazer login com sucesso e redireciona para a rota "/matches"', async () => {
     const res = await request.post('/login').send(mockṔostLogin);
 
