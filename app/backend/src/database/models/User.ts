@@ -7,7 +7,7 @@ class User extends Model<UserInterface> implements UserInterface {
   public username!: string;
   public role!: string;
   public email!: string;
-  public password!: string;
+  public password?: string;
 }
 User.init({
   id: {

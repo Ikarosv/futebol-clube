@@ -3,5 +3,5 @@ export default interface UserInterface {
   username: string;
   role: string;
   email: string;
-  password: string;
+  password?: string;
 }
