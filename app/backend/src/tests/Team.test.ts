@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Testando a rota /teams', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -46,8 +46,9 @@ describe('Seu teste', () => {
       .stub(TeamModel, "findAll")
       .resolves(mockGetTeam as TeamModel[]);
 
-      expect(false).to.be.eq(true);
       const r = await request(app).get('/teams');
+      
+      expect(r).to.have.status(200);
 
       expect(r).to.be.a('object');
       expect(r).to.have.property('status');
