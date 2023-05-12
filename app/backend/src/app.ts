@@ -1,5 +1,6 @@
 import * as express from 'express';
 import controllers from './database/controllers';
+import ErrorMiddleware from './database/middlewares/ErrorMiddleware';
 
 class App {
   public app: express.Express;
@@ -15,6 +16,8 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+
+    this.app.use(ErrorMiddleware.handleError);
   }
 
   private config():void {
