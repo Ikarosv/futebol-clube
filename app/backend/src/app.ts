@@ -1,4 +1,5 @@
 import * as express from 'express';
+import controllers from './database/controllers';
 
 class App {
   public app: express.Express;
@@ -7,6 +8,10 @@ class App {
     this.app = express();
 
     this.config();
+
+    controllers.forEach((controller) => {
+      this.app.use(controller.path, controller.router);
+    });
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
