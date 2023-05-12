@@ -7,7 +7,7 @@ import { app } from '../app';
 import TeamModel from '../database/models/Team';
 
 import { Response } from 'superagent';
-import { mockGetTeam } from './mocks/Team.mock';
+import { mockGetTeam, mockGetTeamById } from './mocks/Team.mock';
 const { request } = chai;
 chai.use(chaiHttp);
 
@@ -38,34 +38,44 @@ describe('Testando a rota /teams', () => {
   //   expect(...)
   // });
 
-  describe('Testando a controller', () => {
-    afterEach(sinon.restore);
+  afterEach(sinon.restore);
 
-    it('Testa se um GET na rota "/teams" retorna todos os times', async () => {
-      sinon
-      .stub(TeamModel, "findAll")
-      .resolves(mockGetTeam as TeamModel[]);
+  it('Testa se um GET na rota "/teams" retorna todos os times', async () => {
+    sinon
+    .stub(TeamModel, "findAll")
+    .resolves(mockGetTeam as TeamModel[]);
 
-      const r = await request(app).get('/teams');
-      
-      expect(r).to.have.status(200);
+    const teams = await request(app).get('/teams');
+    
+    expect(teams).to.have.status(200);
 
-      expect(r).to.be.a('object');
-      expect(r).to.have.property('status');
-      expect(r).to.have.property('body');
-      expect(r.body).to.be.deep.eq(mockGetTeam);
-    });
-    it('Testa se algo der errado na service ou model o controller envia erro 500', async () => {
-      sinon
-      .stub(TeamModel, "findAll")
-      .throws();
+    expect(teams).to.be.a('object');
+    expect(teams).to.have.property('status');
+    expect(teams).to.have.property('body');
+    expect(teams.body).to.be.deep.eq(mockGetTeam);
+  });
+  it('Testa se algo der errado na service ou model o controller envia erro 500', async () => {
+    sinon
+    .stub(TeamModel, "findAll")
+    .throws();
 
-      const r = await request(app).get('/teams');
-      
-      expect(r).to.have.status(500);
+    const responseError = await request(app).get('/teams');
+    
+    expect(responseError).to.have.status(500);
+  });
 
-      // expect(r).to.be.a('object');
-      // expect(r.body).to.be.deep.eq();
-    });
+  it('Testa se um GET na rota "/teams/:id" retorna o time com o id passado', async () => {
+    sinon
+    .stub(TeamModel, "findOne")
+    .resolves(mockGetTeamById as TeamModel);
+
+    const team = await request(app).get('/teams/2');
+    
+    expect(team).to.have.status(200);
+
+    expect(team).to.be.a('object');
+    expect(team).to.have.property('status');
+    expect(team).to.have.property('body');
+    expect(team.body).to.be.deep.eq(mockGetTeamById);
   });
 });

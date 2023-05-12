@@ -14,3 +14,8 @@ export const mockGetTeam = [
     "teamName": "Botafogo"
   }
 ]
+
+export const mockGetTeamById = {
+  "id": 2,
+  "teamName": "Bahia"
+};
