@@ -46,13 +46,13 @@ describe('Testa a rota /login', () => {
     expect(res.body).to.be.deep.eq(errorAllFieldsMustBeFilled);
   });
 
-  it('Testa caso a senha esteja errada se retorna com status 400 e a mensagem: "Invalid email or password"', async () => {
+  it('Testa caso a senha esteja errada se retorna com status 401 e a mensagem: "Invalid email or password"', async () => {
     process.env.JWT_SECRET = 'secret';
     const res = await request(app).post('/login').send({ ...mockṔostLogin, password: '1234567' });
 
     expect(res).to.be.a('object');
     expect(res).to.have.property('status');
-    expect(res).to.have.status(400);
+    expect(res).to.have.status(401);
     expect(res).to.have.property('body');
     expect(res.body).to.be.deep.eq({ message: 'Invalid email or password' });
   })
