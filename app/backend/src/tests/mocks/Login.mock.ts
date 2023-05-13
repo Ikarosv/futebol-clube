@@ -31,7 +31,7 @@ export const mockUser = {
 }
 
 export const mockṔostUserResponse = {
-    token: sign(mockUser, secret, {
+    token: sign({user: { ...mockUser, password: undefined }}, secret, {
         expiresIn: 86400
     })
 }
