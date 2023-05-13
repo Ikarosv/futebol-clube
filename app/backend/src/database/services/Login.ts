@@ -1,7 +1,9 @@
-import { hashSync, compareSync } from 'bcryptjs';
+import { compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { LoginSchema } from '../../validations/User';
 import ValidationError from '../../errors/ValidationError';
 import User from '../models/User';
+import BadRequestError from '../../errors/BadRequestError';
 
 export default class LoginService {
   public static async login(email: string, password: string) {
@@ -9,17 +11,12 @@ export default class LoginService {
       throw new ValidationError('All fields must be filled');
     }
 
-    const encryptedPassword = this.encryptPassword(password);
-    console.log(encryptedPassword);
+    const user = await User.findOne({ where: { email } });
 
-    const user = await User.findOne({
-      where: {
-        email,
-      },
-    });
-
-    if (!user || !compareSync(password, String(user.password))) {
-      throw new ValidationError('Invalid email or password');
+    if (!user
+      || !compareSync(password, String(user.password))
+      || !LoginService.isEmailAndPasswordValid(email, password)) {
+      throw new BadRequestError('Invalid email or password');
     }
 
     delete user.password;
@@ -29,7 +26,7 @@ export default class LoginService {
     });
   }
 
-  public static encryptPassword(password: string) {
-    return hashSync(password, 8);
+  public static isEmailAndPasswordValid(email: string, password: string) {
+    return LoginSchema.safeParse({ email, password }).success;
   }
 }
