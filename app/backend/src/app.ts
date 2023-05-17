@@ -1,6 +1,6 @@
 import * as express from 'express';
-import controllers from './database/controllers';
-import ErrorMiddleware from './database/middlewares/ErrorMiddleware';
+import controllers from './controllers';
+import ErrorMiddleware from './middlewares/ErrorMiddleware';
 
 class App {
   public app: express.Express;

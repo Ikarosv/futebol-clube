@@ -1,9 +1,9 @@
 import { compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { LoginSchema } from '../../validations/User';
-import ValidationError from '../../errors/ValidationError';
-import User from '../models/User';
-import BadRequestError from '../../errors/BadRequestError';
+import { LoginSchema } from '../validations/User';
+import ValidationError from '../errors/ValidationError';
+import User from '../database/models/User';
+import BadRequestError from '../errors/BadRequestError';
 
 export default class LoginService {
   public static async login(email: string, password: string) {
@@ -19,9 +19,10 @@ export default class LoginService {
       throw new BadRequestError('Invalid email or password');
     }
 
-    delete user.password;
+    user.dataValues.password = undefined;
+    delete user.dataValues.password;
 
-    return sign({ user }, process.env.JWT_SECRET || 'secret', {
+    return sign({ user: user.dataValues }, process.env.JWT_SECRET || 'secret', {
       expiresIn: '1d',
     });
   }

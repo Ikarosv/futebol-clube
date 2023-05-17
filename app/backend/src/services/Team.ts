@@ -1,5 +1,5 @@
-import NotFoundError from '../../errors/NotFoundError';
-import Team from '../models/Team';
+import NotFoundError from '../errors/NotFoundError';
+import Team from '../database/models/Team';
 
 export const getAllTeams = async () => {
   const allTeams = await Team.findAll();

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import ValidationError from '../../errors/ValidationError';
-import NotFoundError from '../../errors/NotFoundError';
-import BadRequestError from '../../errors/BadRequestError';
+import ValidationError from '../errors/ValidationError';
+import NotFoundError from '../errors/NotFoundError';
+import BadRequestError from '../errors/BadRequestError';
 
 export default class ErrorMiddleware {
   static handleError(
@@ -15,13 +15,14 @@ export default class ErrorMiddleware {
     }
 
     if (error instanceof ValidationError) {
-      return res.status(400).json({ message: error.message });
+      return res.status(error.status).json({ message: error.message });
     }
 
     if (error instanceof BadRequestError) {
       return res.status(401).json({ message: error.message });
     }
 
-    return res.status(500).end();
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   }
 }
