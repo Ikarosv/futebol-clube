@@ -16,13 +16,10 @@ export const getAllMatches = async (inProgress?: boolean) => {
       },
     ],
   };
-  
+
   if (inProgress !== undefined) {
     Object.assign(query, { where: { inProgress } });
-    console.log('aaaaaaaaaaaaaaaaaaaaa');
-    
   }
-console.log(query);
 
   return Matches.findAll(query);
 };
