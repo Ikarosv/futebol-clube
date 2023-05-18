@@ -4,6 +4,8 @@ import ValidationError from '../errors/ValidationError';
 import User from '../types/Users';
 import 'express-async-errors';
 
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
+
 export default async function tokenValidation(req: Request, res: Response, next: NextFunction) {
   const { authorization: token } = req.headers;
 
@@ -12,7 +14,7 @@ export default async function tokenValidation(req: Request, res: Response, next:
   }
 
   try {
-    verify(token, 'secret');
+    verify(token, JWT_SECRET);
   } catch (error) {
     throw new ValidationError('Token must be a valid token', 401);
   }
