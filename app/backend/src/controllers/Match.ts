@@ -4,7 +4,10 @@ import { getAllMatches } from '../services/Match';
 const matchRoute = Router();
 
 matchRoute.get('/', async (req, res) => {
-  const allMatches = await getAllMatches();
+  const { inProgress } = req.query;
+  const allMatches = await getAllMatches(inProgress === 'true'
+    || inProgress === 'false'
+    ? JSON.parse(inProgress as string) : undefined);
 
   return res.status(200).json(allMatches);
 });
