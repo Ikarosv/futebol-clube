@@ -25,10 +25,38 @@ export const getAllMatches = async (inProgress?: boolean) => {
   return Matches.findAll(query);
 };
 
+export const updateMatch = async (id: number, homeTeamGoals: number, awayTeamGoals: number) => {
+  const [affectedRows] = await Matches.update(
+    { homeTeamGoals, awayTeamGoals },
+    { where: { id } },
+  );
+
+  if (!affectedRows) {
+    throw new NotFoundError('Match not found');
+  }
+};
+
 export const finishMatch = async (id: number) => {
   const [affectedRows] = await Matches.update({ inProgress: false }, { where: { id } });
 
   if (!affectedRows) {
     throw new NotFoundError('Match not found');
   }
+};
+
+export const createMatch = async (
+  homeTeamId: number,
+  awayTeamId: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+) => {
+  const match = await Matches.create({
+    homeTeamId,
+    awayTeamId,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true,
+  });
+
+  return match;
 };
