@@ -1,0 +1,33 @@
+import Team from '../database/models/Team';
+import Matches from '../database/models/Match';
+
+export const getMatches = async (inProgress?: boolean) => {
+  const query = {
+    include: [
+      {
+        model: Team,
+        as: 'homeTeam',
+        attributes: ['teamName'],
+      },
+      {
+        model: Team,
+        as: 'awayTeam',
+        attributes: ['teamName'],
+      },
+    ],
+  };
+
+  if (inProgress !== undefined) {
+    Object.assign(query, { where: { inProgress } });
+  }
+
+  return Matches.findAll(query);
+};
+
+export const getAllMatches = async () => {
+  const allMatches = await getMatches();
+
+  return allMatches;
+};
+
+export const getMatchById = async (_id: number) => {};

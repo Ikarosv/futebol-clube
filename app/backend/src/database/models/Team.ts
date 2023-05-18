@@ -12,8 +12,8 @@ class Team extends Model<TeamInterface> implements TeamInterface {
    */
   public id!: number;
   public teamName!: string;
-  // static associate(models) {
-  //   // models.Team.hasMany(models.Match, { foreignKey: 'home_team_id', as: 'matches' });
+  // static associate(models: any) {
+  //   console.log(models);
   // }
 }
 
