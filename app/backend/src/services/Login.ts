@@ -14,15 +14,15 @@ export default class LoginService {
     const user = await User.findOne({ where: { email } });
 
     if (!user
-      || !compareSync(password, String(user.password))
+      || !compareSync(password, String(user.dataValues.password))
       || !LoginService.isEmailAndPasswordValid(email, password)) {
       throw new BadRequestError('Invalid email or password');
     }
+    if (user.dataValues?.password) {
+      delete user.dataValues.password;
+    }
 
-    user.dataValues.password = undefined;
-    delete user.dataValues.password;
-
-    return sign({ user: user.dataValues }, process.env.JWT_SECRET || 'secret', {
+    return sign({ user: user.dataValues }, 'secret', {
       expiresIn: '1d',
     });
   }

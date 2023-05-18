@@ -1,4 +1,4 @@
-type Roles = 'admin' | 'user';
+type Roles = 'admin' | 'user' | string;
 
 export default interface UserInterface {
   id: number;

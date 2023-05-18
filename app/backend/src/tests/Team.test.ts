@@ -90,10 +90,10 @@ describe('Testando a rota /teams', () => {
     expect(team.body).to.be.deep.eq({ message: 'Time não encontrado' });
   });
 
-  it('Testa se em caso e erro desconhecido retorna com um status 500', async () => {
+  it('Testa se em caso de erro desconhecido retorna com um status 500', async () => {
     sinon
     .stub(TeamModel, "findOne")
-    .throws();
+    .throws({ app: 'Erro desconhecido' });
 
     const team = await request(app).get('/teams/2');
     

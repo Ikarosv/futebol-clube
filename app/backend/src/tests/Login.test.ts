@@ -21,12 +21,12 @@ describe('Testa a rota /login', () => {
   beforeEach(async () => {
     sinon
       .stub(User, "findOne")
-      .resolves(mockUser as User);
+      .resolves({dataValues: mockUser} as User);
   });
 
   afterEach(sinon.restore)
 
-  it('Testa se é possivel fazer login com sucesso e redireciona para a rota "/matches"', async () => {
+  it('Testa se é possivel fazer login com sucesso', async () => {
     const res = await request(app).post('/login').send(mockṔostLogin);
 
     expect(res).to.be.a('object');
