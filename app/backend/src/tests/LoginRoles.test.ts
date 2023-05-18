@@ -37,12 +37,10 @@ describe('Testando os middlewares', () => {
   it('Testa se é possível ter acesso ao role do atual usuario', async () => {
     sinon.stub(User, "findOne").resolves({ dataValues: {...mockṔostEncrypted, role: mockUser.role} } as User);
     const responseLogin = await request(app).post('/login').send(mockṔostLogin);
-console.log('bbbb', responseLogin.body);
 
     const res = await request(app)
       .get('/login/role')
       .set('authorization', responseLogin.body.token);
-      console.log(res.body);
       
     
     expect(res).to.be.a('object');

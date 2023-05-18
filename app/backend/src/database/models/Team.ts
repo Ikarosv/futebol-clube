@@ -12,9 +12,6 @@ class Team extends Model<TeamInterface> implements TeamInterface {
    */
   public id!: number;
   public teamName!: string;
-  // static associate(models: any) {
-  //   console.log(models);
-  // }
 }
 
 Team.init({
