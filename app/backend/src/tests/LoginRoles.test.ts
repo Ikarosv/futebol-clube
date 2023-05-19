@@ -3,11 +3,8 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
-import { mockUser, mockṔostUserResponse, mockṔostLogin, mockṔostEncrypted } from './mocks/Login.mock';
-import { sign } from 'jsonwebtoken';
-import UserInterface from '../types/Users';
+import { mockUser, mockṔostLogin, mockṔostEncrypted } from './mocks/Login.mock';
 import User from '../database/models/User';
-// import { errorAllFieldsMustBeFilled, mockPostLoginWithoutEmail, mockPostLoginWithoutPassword, mockUser, mockṔostLogin, mockṔostUserResponse } from './mocks/Login.mock';
 
 chai.use(chaiHttp);
 const { request, expect } = chai;
