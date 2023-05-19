@@ -1,9 +1,9 @@
-import MatchesInterface, { MatchTeams } from '../types/Matches';
+import MatchesInterface from '../types/Matches';
 import { getAllMatches } from './Match';
 
 interface MatchesLeaderboard extends MatchesInterface {
-  homeTeam: MatchTeams;
-  awayTeam: MatchTeams;
+  'homeTeam.teamName': string;
+  'awayTeam.teamName': string;
 }
 
 interface Leaderboard {
@@ -87,8 +87,8 @@ export const extractLeaderboard = (matches: MatchesLeaderboard[]) => matches.red
   match,
 ) => {
   const {
-    homeTeam: { teamName: homeTeamName }, homeTeamGoals,
-    awayTeam: { teamName: awayTeamName }, awayTeamGoals } = match;
+    'homeTeam.teamName': homeTeamName, homeTeamGoals,
+    'awayTeam.teamName': awayTeamName, awayTeamGoals } = match;
   const [homeTeam, awayTeam] = initiate(homeTeamName, awayTeamName, acc);
   if (homeTeamGoals > awayTeamGoals) {
     acc[homeTeamName] = addVictory(homeTeam, homeTeamGoals, awayTeamGoals);
@@ -108,8 +108,8 @@ export const extractLeaderboardHome = (matches: MatchesLeaderboard[]) => matches
   match,
 ) => {
   const {
-    homeTeam: { teamName: homeTeamName }, homeTeamGoals,
-    awayTeam: { teamName: awayTeamName }, awayTeamGoals } = match;
+    'homeTeam.teamName': homeTeamName, homeTeamGoals,
+    'awayTeam.teamName': awayTeamName, awayTeamGoals } = match;
   const [homeTeam] = initiate(homeTeamName, awayTeamName, acc);
   if (homeTeamGoals > awayTeamGoals) {
     acc[homeTeamName] = addVictory(homeTeam, homeTeamGoals, awayTeamGoals);

@@ -5,23 +5,15 @@ import NotFoundError from '../errors/NotFoundError';
 export const getAllMatches = async (inProgress?: boolean) => {
   const query = {
     include: [
-      {
-        model: Team,
-        as: 'homeTeam',
-        attributes: ['teamName'],
-      },
-      {
-        model: Team,
-        as: 'awayTeam',
-        attributes: ['teamName'],
-      },
+      { model: Team, as: 'homeTeam', attributes: ['teamName'] },
+      { model: Team, as: 'awayTeam', attributes: ['teamName'] },
     ],
+    raw: true,
   };
 
   if (inProgress !== undefined) {
     Object.assign(query, { where: { inProgress } });
   }
-
   return Matches.findAll(query);
 };
 
