@@ -6,12 +6,8 @@ export const matchMock = [
     "awayTeamId": 8,
     "awayTeamGoals": 1,
     "inProgress": false,
-    "homeTeam": {
-      "teamName": "São Paulo"
-    },
-    "awayTeam": {
-      "teamName": "Grêmio"
-    }
+    "homeTeam.teamName": "São Paulo",
+    "awayTeam.teamName": "Grêmio",
   },
   {
     "id": 2,
@@ -20,12 +16,8 @@ export const matchMock = [
     "awayTeamId": 14,
     "awayTeamGoals": 1,
     "inProgress": false,
-    "homeTeam": {
-      "teamName": "Internacional"
-    },
-    "awayTeam": {
-      "teamName": "Santos"
-    }
+    "homeTeam.teamName": "Internacional",
+    "awayTeam.teamName": "Santos",
   },
   {
     "id": 3,
@@ -34,12 +26,8 @@ export const matchMock = [
     "awayTeamId": 11,
     "awayTeamGoals": 0,
     "inProgress": false,
-    "homeTeam": {
-      "teamName": "Corinthians"
-    },
-    "awayTeam": {
-      "teamName": "Napoli-SC"
-    }
+    "homeTeam.teamName": "Corinthians",
+    "awayTeam.teamName": "Napoli-SC",
 }];
 
 export const matchMockInProgress = [
