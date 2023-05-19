@@ -6,13 +6,13 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import Matches from '../database/models/Match';
 import { matchMock } from './mocks/Match.mock';
-import { extractLeaderboardHome } from '../services/Leaderboard';
+import { MatchesLeaderboard, extractLeaderboardHome } from '../services/Leaderboard';
 
 chai.use(chaiHttp);
 
 const { expect, request } = chai;
 
-const expectedReturn = extractLeaderboardHome(matchMock);
+const expectedReturn = extractLeaderboardHome((matchMock as unknown) as MatchesLeaderboard[]);
 
 describe('Testando a rota /leaderboard', () => {
 

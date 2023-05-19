@@ -8,7 +8,6 @@ export const getAllMatches = async (inProgress?: boolean) => {
       { model: Team, as: 'homeTeam', attributes: ['teamName'] },
       { model: Team, as: 'awayTeam', attributes: ['teamName'] },
     ],
-    raw: true,
   };
 
   if (inProgress !== undefined) {
