@@ -1,3 +1,8 @@
+type MatchTeams = {
+  id?: number;
+  teamName: string;
+};
+
 export default interface MatchesInterface {
   id?: number;
   homeTeamId: number;
@@ -5,4 +10,6 @@ export default interface MatchesInterface {
   awayTeamId: number;
   awayTeamGoals: number;
   inProgress: boolean;
+  homeTeam?: MatchTeams;
+  awayTeam?: MatchTeams;
 }
