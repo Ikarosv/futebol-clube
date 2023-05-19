@@ -15,34 +15,44 @@ interface Leaderboard {
   totalLosses: number;
   goalsFavor: number;
   goalsOwn: number;
+  goalsBalance: number;
+  efficiency: string;
 }
 
-export const addVictory = (current: Leaderboard, winTeamGoals: number, loseTeamGoals: number) => {
+export const defaultMatchAttributes = (
+  current: Leaderboard,
+  teamGoals1: number,
+  teamGoals2: number,
+  points: number,
+) => {
   const newLeaderboard = { ...current };
-  newLeaderboard.totalVictories += 1;
-  newLeaderboard.totalPoints += winTeamGoals;
   newLeaderboard.totalGames += 1;
-  newLeaderboard.goalsFavor += winTeamGoals;
-  newLeaderboard.goalsOwn += loseTeamGoals;
+  newLeaderboard.goalsFavor += teamGoals1;
+  newLeaderboard.goalsOwn += teamGoals2;
+  newLeaderboard.goalsBalance = newLeaderboard.goalsFavor - newLeaderboard.goalsOwn;
+  newLeaderboard.efficiency = (
+    ((newLeaderboard.totalPoints + points) / (newLeaderboard.totalGames * 3)) * 100)
+    .toFixed(2);
+  return newLeaderboard;
+};
+
+export const addVictory = (current: Leaderboard, winTeamGoals: number, loseTeamGoals: number) => {
+  const newLeaderboard = { ...defaultMatchAttributes(current, winTeamGoals, loseTeamGoals, 3) };
+  newLeaderboard.totalVictories += 1;
+  newLeaderboard.totalPoints += 3;
   return newLeaderboard;
 };
 
 export const addLose = (current: Leaderboard, loseTeamGoals: number, winTeamGoals: number) => {
-  const newLeaderboard = { ...current };
+  const newLeaderboard = { ...defaultMatchAttributes(current, loseTeamGoals, winTeamGoals, 0) };
   newLeaderboard.totalLosses += 1;
-  newLeaderboard.totalGames += 1;
-  newLeaderboard.goalsFavor += loseTeamGoals;
-  newLeaderboard.goalsOwn += winTeamGoals;
   return newLeaderboard;
 };
 
 export const addDraw = (current: Leaderboard, teamGoals1: number, teamGoals2: number) => {
-  const newLeaderboard = { ...current };
+  const newLeaderboard = { ...defaultMatchAttributes(current, teamGoals1, teamGoals2, 1) };
   newLeaderboard.totalDraws += 1;
   newLeaderboard.totalPoints += 1;
-  newLeaderboard.totalGames += 1;
-  newLeaderboard.goalsFavor += teamGoals1;
-  newLeaderboard.goalsOwn += teamGoals2;
   return newLeaderboard;
 };
 
@@ -54,6 +64,8 @@ const initialPlaceholder = {
   totalLosses: 0,
   goalsFavor: 0,
   goalsOwn: 0,
+  goalsBalance: 0,
+  efficiency: 0.0,
 };
 
 const initiate = (
@@ -113,7 +125,10 @@ export const getLeaderboardHome = async () => {
   const allMatches = (await getAllMatches(false) as unknown) as MatchesLeaderboard[];
 
   const leaderboardObj = extractLeaderboardHome(allMatches);
-  const leaderboard = Object.values(leaderboardObj);
+  const leaderboard = Object.values(leaderboardObj)
+    .sort((a: any, b: any) => b.goalsFavor - a.goalsFavor)
+    .sort((a: any, b: any) => b.goalsBalance - a.goalsBalance)
+    .sort((a: any, b: any) => b.totalPoints - a.totalPoints);
 
   return leaderboard;
 };
