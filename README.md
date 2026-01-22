@@ -15,7 +15,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - **Linguagem:** [TypeScript](https://www.typescriptlang.org/) / JavaScript
 - **Estilização:** CSS
-- **Banco de Dados:** SQL (Estrutura disponível em `db.example.sql`)
+- **Banco de Dados:** MySQL (Estrutura disponível em `db.example.sql`) e Sequelize
 - **Gerenciador de Pacotes:** NPM / Yarn
 
 ---
